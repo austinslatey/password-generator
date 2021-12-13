@@ -29,9 +29,8 @@ if (passwordLengthNum <= 8 && passwordLengthNum >= 128) {
   generatePassword();
 } 
 
-
-
-
+ 
+ 
 
 // if something is selected create the data set
 // run a for loop for as many characters the user would like to create 
@@ -76,17 +75,18 @@ else {
   // if user doesnt select 1 certain character select, inform user that input is invalid, enter character select again
   
 }
+  return password;
 }
+ 
+  getCharacterRequirement();
 
 
-getCharacterRequirement();
 
 
 
 // print password
 
-
-
+writePassword();
 
 
 
