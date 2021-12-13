@@ -32,6 +32,7 @@ if (passwordLengthNum <= 8 && passwordLengthNum >= 128) {
 
 
 
+
 // if something is selected create the data set
 // run a for loop for as many characters the user would like to create 
 // select a character at random from data set append character to password
@@ -51,19 +52,19 @@ var getCharacterRequirement = function() {
 // check to see if there is at leasst 1 certain type of chatacter selcted (below)
 if (useLowercase || useUppercase || useNumeric || useSpecialCharacters) {
   if (useLowercase) {
-    characterSet = characterSet + lowerCaseChars;
+    characterSet.concat(lowerCaseChars);
   }
   
   if (useUppercase) {
-    characterSet = characterSet + upperCaseChars;
+    characterSet.concat(upperCaseChars);
   }
 
   if (useNumeric) {
-    characterSet = characterSet + numericChars;
+    characterSet.concat(numericChars);
   }
 
   if (useSpecialCharacters) {
-    characterSet = characterSet + specialChars;
+    characterSet.concat(specialChars);
   }
 
 
@@ -76,6 +77,8 @@ else {
   
 }
 }
+
+getCharacterRequirement();
 
 
 
