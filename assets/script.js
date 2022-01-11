@@ -1,98 +1,108 @@
-// Assignment code here
+// Get references to the #generate element
+var generateBtn = document.querySelector("#generate");
 
-var lowerCaseChars = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-var upperCaseChars = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-var numericChars = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-var specialChars = ["@", "#", "$", "%", "&", "*", "!"]
+
+
+//set up the array to append data to character requirements
+var dataSet = ["abcdefghijklmnopqrstuvwxyz", "ABCDEFGHITJLMNOPQRSTUVWXYZ", "1234567890", ' !@#$%^&*(){}|><'];
+// seeting up for user input for character requirements
 var characterSet = "";
 
-// Get references to the #generate element
-var generateBtn = document.querySelector("#generate"); 
-
-// Write password to the #password input
+// display password to password input element
 function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
+    var password = definePassword();
+    var passwordText = document.querySelector("#password");
 
-  passwordText.value = password;
+    passwordText.value = password;
+
+}
+
+//defines the password and starts to define it helper functions
+function definePassword() {
+    //for password length
+    var passwordLength = generatePasswordLength();
+    // getting conformation from user what character types they would like
+    var confirmAtLeastone = getCharacterRequirement();
+
+    var password = createPassword(confirmAtLeastone, passwordLength);
+
+    return password;
 
 }
 
-var generatePassword = function() {
-// ask user to enter password length
-var passwordLength = window.prompt("Please enter password length.");
-// check to see if password length meets critera
-var passwordLengthNum = parseInt(passwordLength); 
-// if password length doesnt meet criteria, inform user that input is invalid. enter password length again.
-if (passwordLengthNum <= 8 && passwordLengthNum >= 128) {
-  window.alert("Invalid input!");
-  generatePassword();
-} 
+var generatePasswordLength = function () {
+    // ask user to enter password length
+    var passwordLengthNum = window.prompt("Please enter password length between 8 & 128.");
+    // check to see if password length meets critera
+    var passwordLengthNum = parseInt(passwordLengthNum);
+    // if password length doesnt meet criteria, inform user that input is invalid. enter password length again.
+    if (passwordLengthNum < 8 && passwordLengthNum > 128) {
+        window.prompt("Invalid input!");
+        return generatePasswordLength();
 
- 
- 
-
-// if something is selected create the data set
-// run a for loop for as many characters the user would like to create 
-// select a character at random from data set append character to password
-
+    } else {
+        return passwordLengthNum;
+    }
 }
+
 
 // if password length meets criteria ask user if they would like to include  include lowercase, uppercase, numeric, and/or special characters
-
-var getCharacterRequirement = function() {
-  var useLowercase = window.confirm("Would you like to use lowercase?");
-  var useUppercase = window.confirm("Would you like to use Uppercase?");
-  var useNumeric = window.confirm("Would you like to use numeric vaules?");
-  var useSpecialCharacters = window.confirm("Would you like to use Special Characters?");
-
-
-
-// check to see if there is at leasst 1 certain type of chatacter selcted (below)
-if (useLowercase || useUppercase || useNumeric || useSpecialCharacters) {
-  if (useLowercase) {
-    characterSet.concat(lowerCaseChars);
-  }
-  
-  if (useUppercase) {
-    characterSet.concat(upperCaseChars);
-  }
-
-  if (useNumeric) {
-    characterSet.concat(numericChars);
-  }
-
-  if (useSpecialCharacters) {
-    characterSet.concat(specialChars);
-  }
+// check to see if there is at least 1 certain type of character selcted (below)
+function getCharacterRequirement() {
+    var confirmAtLeastone = [];
+    confirmAtLeastone.push(confirm("Would you like to use lowercase?"));
+    confirmAtLeastone.push(confirm("Would you like to use Uppercase?"));
+    confirmAtLeastone.push(confirm("Would you like to use numeric vaules?"));
+    confirmAtLeastone.push(confirm("Would you like to use Special Characters?"));
 
 
-  
-} 
 
-else {
-  getCharacterRequirement();
-  // if user doesnt select 1 certain character select, inform user that input is invalid, enter character select again
-  
+
+    // if user doesnt select 1 certain character select, inform user that input is invalid, enter character select again
+
+     if (confirmAtLeastone.includes(true)) {
+        // sucessful return of the value of what the user decides to choose. 
+        return confirmAtLeastone;
+        
+
+    } else {
+        alert("Select one character, at the very least.");
+        console.log("someError");
+        confirmAtLeastone = getCharacterRequirement();
+    }
 }
-  return password;
+
+
+function generateCharSet(passwordEl) {
+
+    // run a for loop for as many characters the user would like to create
+    for (let i = 0; i < passwordEl.length; i++) {
+        if (passwordEl[i]) {
+            characterSet = characterSet + dataSet[i];
+        }
+    }
+    return characterSet;
 }
- 
-  getCharacterRequirement();
+
+// select character set at random from data set
+var generateCharSetAtRandom = function (characterSet) {
+    var atRandom = Math.floor(Math.random() * characterSet.length);
+    return characterSet[atRandom];
+}
 
 
+function createPassword(passwordEl, passwordLength) {
+    var characterSet = generateCharSet(passwordEl);
+    var password = "";
 
 
+    for (var i = 0; i < passwordLength; i++) {
+        password = password + generateCharSetAtRandom(characterSet);
+    }
 
-// print password
+    return password;
 
-writePassword();
+}
 
-
-
-
-
-
-
-// Add event listener to generate button
+// Add event listener to generate button to fire write password
 generateBtn.addEventListener("click", writePassword);
