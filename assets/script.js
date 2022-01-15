@@ -35,8 +35,8 @@ var generatePasswordLength = function () {
     var passwordLengthNum = window.prompt("Please enter password length between 8 & 128.");
     // check to see if password length meets critera
     var passwordLengthNum = parseInt(passwordLengthNum);
-    // if password length doesnt meet criteria, inform user that input is invalid. enter password length again.
-    if (passwordLengthNum < 8 && passwordLengthNum > 128) {
+   
+    if (passwordLengthNum <= 8 && passwordLengthNum >= 128) {
         window.prompt("Invalid input!");
         return generatePasswordLength();
 
@@ -47,9 +47,11 @@ var generatePasswordLength = function () {
 
 
 // if password length meets criteria ask user if they would like to include  include lowercase, uppercase, numeric, and/or special characters
-// check to see if there is at least 1 certain type of character selcted (below)
 function getCharacterRequirement() {
+
+    // check to see if there is at least 1 certain type of character selcted 
     var confirmAtLeastone = [];
+
     confirmAtLeastone.push(confirm("Would you like to use lowercase?"));
     confirmAtLeastone.push(confirm("Would you like to use Uppercase?"));
     confirmAtLeastone.push(confirm("Would you like to use numeric vaules?"));
@@ -84,7 +86,7 @@ function generateCharSet(passwordEl) {
     return characterSet;
 }
 
-// select character set at random from data set
+// selects a character set at random from data set
 var generateCharSetAtRandom = function (characterSet) {
     var atRandom = Math.floor(Math.random() * characterSet.length);
     return characterSet[atRandom];
